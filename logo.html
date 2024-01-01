@@ -1,0 +1,44 @@
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://code4fukui.github.io/three.js/build/three.module.js",
+    "three/addons/": "https://code4fukui.github.io/three.js/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { createMeshIJFont } from "https://ichigojam.github.io/font/createMeshIJFont.js";
+import { createMaterialGaming } from "./createMaterialGaming.js";
+import { createMeshFloor } from "./createMeshFloor.js";
+
+camera.position.y = 1.5;
+
+//const material = new THREE.MeshBasicMaterial({ color: "#ff3300" });
+
+const material = createMaterialGaming();
+const obj = await createMeshIJFont("HAPPY NEW YEAR 2024", material);
+scene.add(obj);
+
+const floor = createMeshFloor();
+scene.add(floor);
+console.log(floor);
+
+console.log(obj);
+obj.position.z = -5;
+obj.position.y = 1.5;
+obj.scale.x = obj.scale.y = obj.scale.z = 0.01;
+
+//obj.applyMatrix4(new THREE.Matrix4().makeTranslation(-5, 0, 0));
+
+renderer.setAnimationLoop(() => {
+  obj.rotation.z += 0.002;
+  obj.rotation.y += 0.01;
+  material.update();
+  renderer.render(scene, camera);
+});
+
+</script>
+</body>
+</html>

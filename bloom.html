@@ -1,0 +1,53 @@
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://code4fukui.github.io/three.js/build/three.module.js",
+    "three/addons/": "https://code4fukui.github.io/three.js/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { createMeshIJFont } from "https://ichigojam.github.io/font/createMeshIJFont.js";
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { createMaterialGaming } from "./createMaterialGaming.js";
+
+//const material = new THREE.MeshBasicMaterial({ color: "#ff3300" });
+
+
+const material = createMaterialGaming();
+const obj = await createMeshIJFont("HAPPY NEW YEAR 2024", material);
+scene.add(obj);
+
+console.log(obj);
+obj.position.z = -5;
+obj.position.y = 0;
+obj.scale.x = obj.scale.y = obj.scale.z = 0.005;
+
+//obj.applyMatrix4(new THREE.Matrix4().makeTranslation(-5, 0, 0));
+
+const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+
+const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+bloomPass.threshold = 0.21;
+bloomPass.strength = 1.2; // 強度
+bloomPass.radius = 0.55; // 半径
+
+composer.addPass(bloomPass);
+
+renderer.setAnimationLoop(() => {
+  obj.rotation.z += 0.002;
+  obj.rotation.y += 0.01;
+  material.update();
+  composer.render();
+  //renderer.render(scene, camera);
+});
+
+</script>
+</body>
+</html>

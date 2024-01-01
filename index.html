@@ -1,0 +1,73 @@
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://code4fukui.github.io/three.js/build/three.module.js",
+    "three/addons/": "https://code4fukui.github.io/three.js/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import { THREE, scene, camera, renderer } from "https://code4fukui.github.io/egxr.js/egxr.js";
+import { createMeshIJFont } from "https://ichigojam.github.io/font/createMeshIJFont.js";
+import { createMaterialGaming } from "./createMaterialGaming.js";
+import { createMeshFloor } from "./createMeshFloor.js";
+
+import { ARButton } from "./ARButton.js";
+
+document.body.removeChild(document.getElementById("ARButton"));
+document.body.appendChild(ARButton.createButton(renderer, {
+  requiredFeatures: ["local-floor"],
+  optionalFeatures: ['bounded-floor'],
+  //requiredFeatures: ["bounded-floor"],
+  //requiredFeautures: ["local"],
+}));
+
+
+const material = createMaterialGaming();
+
+const list = [];
+const words = "HAPPY NEW YEAR 2024".split(" ");
+const n = 30;
+for (let i = 0; i < n; i++) {
+  const obj = await createMeshIJFont(words[i % words.length], material);
+  const th = Math.random() * Math.PI * 2;
+  const r = 1 + Math.random() * 2;
+  const x = Math.cos(th) * r;
+  const z = Math.sin(th) * r;
+  const y = Math.random() * 3;
+  obj.position.x = x;
+  obj.position.z = z;
+  obj.position.y = y;
+  obj.rotation.y = Math.atan2(obj.position.x, obj.position.z) - Math.PI;
+  obj.scale.x = obj.scale.y = obj.scale.z = 0.005;
+  obj.rx = 0.1 + Math.random();
+  obj.rz = 0.1 + Math.random();
+  obj.update = () => {
+    obj.position.y -= 0.01;
+    if (obj.position.y < -0.5) {
+      obj.position.y += 4;
+    }
+    obj.rotation.z += obj.rz / 100;
+    obj.rotation.x += obj.rx / 100;
+    //obj.rotation.y += 0.01;
+  };
+  list.push(obj);
+  scene.add(obj);
+}
+
+const floor = createMeshFloor();
+scene.add(floor);
+const ceiling = createMeshFloor();
+ceiling.position.y = 3.5;
+scene.add(ceiling);
+
+renderer.setAnimationLoop(() => {
+  list.forEach(i => i.update());
+  material.update();
+  renderer.render(scene, camera);
+});
+
+</script>
+</body>
+</html>
