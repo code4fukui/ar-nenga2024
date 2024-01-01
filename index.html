@@ -1,3 +1,6 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link rel="icon" href="data:">
+<head></head>
+<body>
 <script type="importmap">
 {
   "imports": {
@@ -13,18 +16,8 @@ import { createMeshIJFont } from "https://ichigojam.github.io/font/createMeshIJF
 import { createMaterialGaming } from "./createMaterialGaming.js";
 import { createMeshFloor } from "./createMeshFloor.js";
 
-import { ARButton } from "./ARButton.js";
-
-document.body.removeChild(document.getElementById("ARButton"));
-document.body.appendChild(ARButton.createButton(renderer, {
-  requiredFeatures: ["local-floor"],
-  optionalFeatures: ['bounded-floor'],
-  //requiredFeatures: ["bounded-floor"],
-  //requiredFeautures: ["local"],
-}));
-
-
 const material = createMaterialGaming();
+//const material = new THREE.MeshBasicMaterial({ color: "#ff3300" });
 
 const list = [];
 const words = "HAPPY NEW YEAR 2024".split(" ");
