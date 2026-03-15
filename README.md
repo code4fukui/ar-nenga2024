@@ -1,9 +1,8 @@
 # ar-nenga2024
 
-A Three.js-based project that creates a 3D animation of "HAPPY NEW YEAR 2024" text with a glowing material and a floating floor.
+> 日本語のREADMEはこちらです: [README.ja.md](README.ja.md)
 
-## Demo
-No live demo available.
+A Three.js-based project that creates a 3D animation of "HAPPY NEW YEAR 2024" text with a glowing material and a floating floor.
 
 ## Features
 - Generates 3D text "HAPPY NEW YEAR 2024" with a custom glowing material
