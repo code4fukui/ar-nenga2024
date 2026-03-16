@@ -27,4 +27,4 @@ This project uses the following external libraries:
 - [createMeshIJFont.js](https://github.com/ichigojam/font) for generating 3D text
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
+MIT License — see [LICENSE](LICENSE).
